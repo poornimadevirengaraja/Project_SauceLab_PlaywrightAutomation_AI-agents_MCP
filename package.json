@@ -1,0 +1,23 @@
+{
+  "name": "project_saucelab_playwrightautomation_aiagents",
+  "version": "1.0.0",
+  "description": "This is a Playwright Automation framework of a sample Project \"sauce lab\" using playwright Typescript and Javascript using AI agents",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/poornimadevirengaraja/Project_SauceLab_PlaywrightAutomation_AIagents.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/poornimadevirengaraja/Project_SauceLab_PlaywrightAutomation_AIagents/issues"
+  },
+  "homepage": "https://github.com/poornimadevirengaraja/Project_SauceLab_PlaywrightAutomation_AIagents#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6"
+  }
+}

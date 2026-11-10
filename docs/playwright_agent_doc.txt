@@ -1,0 +1,47 @@
+https://playwright.dev/docs/test-agents
+
+
+Installing playwright :
+=======================
+1. Create one folder with the name AI-automation-project. 
+2. Open VS Code in the dedicated automation project folder. .
+3. Open the terminal in the AI automation project folder. 
+4. Install Playwright with the given command: 
+   `npm init playwright@latest`. 
+5. Go with all default options while installing Playwright. 
+   -> Continue pressing the Enter button and complete the installation. 
+
+Installing Agents and start mcp server:
+======================================
+1)
+install the 3 agents in agents folder:
+npx playwright init-agents --loop=vscode
+
+2) 
+.vscode and mcp.json should be like this, so that start button will be seen to start MCP server:
+{
+  "servers": {
+    "playwright-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "playwright",
+        "run-test-mcp-server"
+      ]
+    }
+  }
+}
+
+
+(or) You can install below extenstion in vscode and start the MCP server.
+playwright-test
+
+3) open this and click on configure tools and check all the builtin and playwright browser checkboxes and save the md file:
+playwright-test-generator.agent.md
+playwright-test-healer.agent.md
+playwright-test-planner.agent.md
+
+4) Select "Local" in bottom of the chat window. Donot select Copiolet.
+5) check if "Agent" icon  is seen in chat box window ( Agent , Ask, plan) .  If not seen, enable the Agent in "chat > Agent > checkbox > on" in settings of vscode.
+6) select playwright-test-planner.agent.md from Agent tool icon in chat window.
