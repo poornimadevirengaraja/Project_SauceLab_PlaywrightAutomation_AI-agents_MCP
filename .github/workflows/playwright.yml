@@ -1,0 +1,41 @@
+name: Playwright Tests
+on:
+  push:
+    branches:
+      - main                # Triggers when code lands on main (via direct push or PR merge)
+  pull_request:
+    branches:
+      - main                # Triggers *before* merging, when a PR targets the main branch
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npx playwright test
+    - name: Generate Allure report
+      if: always()
+      run: npx allure generate allure-results --clean -o allure-report
+    - name: Upload Playwright report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+    - name: Upload Allure report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report
+        path: allure-report/
+        retention-days: 30

@@ -1,0 +1,69 @@
+{
+  "sharedPassword": "secret_sauce",
+  "users": [
+    {
+      "scenario": "standard_user",
+      "username": "standard_user",
+      "password": "secret_sauce",
+      "expectedResult": "success",
+      "expectedError": ""
+    },
+    {
+      "scenario": "locked_out_user",
+      "username": "locked_out_user",
+      "password": "secret_sauce",
+      "expectedResult": "locked",
+      "expectedError": "Sorry, this user has been locked out."
+    },
+    {
+      "scenario": "problem_user",
+      "username": "problem_user",
+      "password": "secret_sauce",
+      "expectedResult": "success",
+      "expectedError": ""
+    },
+    {
+      "scenario": "performance_glitch_user",
+      "username": "performance_glitch_user",
+      "password": "secret_sauce",
+      "expectedResult": "success",
+      "expectedError": ""
+    },
+    {
+      "scenario": "error_user",
+      "username": "error_user",
+      "password": "secret_sauce",
+      "expectedResult": "success",
+      "expectedError": ""
+    },
+    {
+      "scenario": "visual_user",
+      "username": "visual_user",
+      "password": "secret_sauce",
+      "expectedResult": "success",
+      "expectedError": ""
+    },
+    {
+      "scenario": "unknown_user",
+      "username": "unknown_user",
+      "password": "invalid_password",
+      "expectedResult": "failure",
+      "expectedError": "Username and password do not match"
+    },
+    {
+      "scenario": "standard_user_wrong_password",
+      "username": "standard_user",
+      "password": "wrong_password",
+      "expectedResult": "failure",
+      "expectedError": "Username and password do not match"
+    }
+  ],
+  "checkoutProfiles": [
+    {
+      "scenario": "standard_checkout",
+      "firstName": "Taylor",
+      "lastName": "Morgan",
+      "postalCode": "10001"
+    }
+  ]
+}
