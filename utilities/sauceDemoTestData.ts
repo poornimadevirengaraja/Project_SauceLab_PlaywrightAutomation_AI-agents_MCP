@@ -13,10 +13,28 @@ export interface CheckoutProfile {
   postalCode: string;
 }
 
+export interface NavigationMenuEntry {
+  scenario: string;
+  label: string;
+}
+
+export interface InventoryProduct {
+  scenario: string;
+  productName: string;
+  imageAlt: string;
+  imageSource: string;
+  description: string;
+  price: string;
+  imageNaturalWidth: number;
+  imageNaturalHeight: number;
+}
+
 export interface SauceDemoTestData {
   sharedPassword: string;
   users: UserCredentials[];
   checkoutProfiles: CheckoutProfile[];
+  navigationMenuEntries: NavigationMenuEntry[];
+  inventoryProducts: InventoryProduct[];
 }
 
 export function parseTestData(value: unknown): SauceDemoTestData {
@@ -25,7 +43,13 @@ export function parseTestData(value: unknown): SauceDemoTestData {
   }
 
   const data = value as Partial<SauceDemoTestData>;
-  if (!data.sharedPassword || !Array.isArray(data.users) || !Array.isArray(data.checkoutProfiles)) {
+  if (
+    !data.sharedPassword ||
+    !Array.isArray(data.users) ||
+    !Array.isArray(data.checkoutProfiles) ||
+    !Array.isArray(data.navigationMenuEntries) ||
+    !Array.isArray(data.inventoryProducts)
+  ) {
     throw new Error('SauceDemo test data is incomplete. Run npm run testdata:build.');
   }
 

@@ -19,10 +19,18 @@ async function main() {
   await workbook.xlsx.readFile(path.join(root, 'testdata', 'saucedemo-testdata.xlsx'));
   const users = await worksheetRecords(workbook, 'Users');
   const checkoutProfiles = await worksheetRecords(workbook, 'Checkout');
+  const navigationMenuEntries = await worksheetRecords(workbook, 'Navigation');
+  const inventoryProducts = (await worksheetRecords(workbook, 'Inventory')).map((product) => ({
+    ...product,
+    imageNaturalWidth: Number(product.imageNaturalWidth),
+    imageNaturalHeight: Number(product.imageNaturalHeight),
+  }));
   const data = {
     sharedPassword: users.find((user) => user.scenario === 'standard_user')?.password ?? '',
     users,
     checkoutProfiles,
+    navigationMenuEntries,
+    inventoryProducts,
   };
 
   await fs.writeFile(path.join(root, 'testdata', 'saucedemo-testdata.json'), `${JSON.stringify(data, null, 2)}\n`);
