@@ -39,7 +39,7 @@ jobs:
     - name: Run Playwright tests
       env:
         BROWSER: ${{ secrets.BROWSER_NAME }}
-      run: npx playwright test --grep "@${{ inputs.Tagname }}" --project="$BROWSER"     
+      run: npx playwright test --grep "@${{ inputs.Tagname }}" --project="$BROWSER"
 
     - name: Generate Allure report
       if: always()

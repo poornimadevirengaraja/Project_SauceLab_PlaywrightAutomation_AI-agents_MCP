@@ -9,7 +9,7 @@ This is a Playwright Automation framework of a sample Project "sauce lab" using 
 
 `fixtures/`, `pages/`, `testdata/`, `utilities/`, and `tests/` are top-level siblings. SauceDemo page objects are grouped by page under `pages/saucelab/`; `pages/common/` contains `BasePage` and `PageManager`. Tests should import `test` and `expect` from `fixtures/sauceDemoFixture.ts` to receive the shared page manager and Excel-backed `testData` fixture.
 
-The Excel workbook is `testdata/saucedemo-testdata.xlsx`. Its worksheets are converted to JSON-shaped records by `utilities/excelToJson.ts` and validated/typed by `utilities/sauceDemoTestData.ts`.
+The Excel workbook is `testdata/saucedemo-testdata.xlsx`. Its Users, Checkout, Navigation, and Inventory worksheets are converted to JSON-shaped records by `utilities/excelToJson.cjs` and validated/typed by `utilities/sauceDemoTestData.ts`. Tests consume the generated `testdata/saucedemo-testdata.json` through the shared fixture.
 
 Run `npm test` for the suite or `npm run typecheck` to validate TypeScript.
 Run `npm run test:reports` to execute the suite and generate both reports: `playwright-report/index.html` and `allure-report/index.html`. To regenerate the Allure report from existing results, run `npm run allure:generate`.

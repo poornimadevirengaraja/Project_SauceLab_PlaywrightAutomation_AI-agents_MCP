@@ -78,6 +78,22 @@ This means the test folder, test data, fixtures, pages, and utils folder should 
 
 you can use the same kind of prompt and generate all the test scenarios for each and every test scenario mentioned in the "saucedemo-comprehensive-test-plan.md" file.
 
+To generate only one test scenario given in .md file :
+====================================================
+implement all the test scenarios for "5. Shopping Cart > 5.1. Verify empty cart controls and navigation" in "saucedemo-comprehensive-test-plan.md"
+Create a Page Object Model structure, and make sure the following important folders are outside of the test folder:
+
+1) fixtures folder
+2) pages folder - common, saucelab sub folder
+     common folder - This will have BasePage.ts and PageManager.ts
+     saucelab folder - This will have each page names given as a sub folder and use the page object model to create pages for this folder
+3) testdata folder  - create a excel testdata sheet in the test data folder.Read the excel test data and convert the test data to json test data and use the json test data in the test cases.
+4) utilities folder - can have all the utils maintained here. e.g. install a package to read excel file test data 
+5) tests folder - It contains all the tests > spec.ts files
+
+This means the test folder, test data, fixtures, pages, and utils folder should be on the same level. Maintain the coding standard as per the enterprise-level framework.
+
+
 If you see it got stuck and takes longer time to create the test cases, then you can stop the agent and give each test scenario like this:
 ===========================================================================================================================================
 1) implement all the test scenarios for "1. Login Screen and Authentication" in "saucedemo-comprehensive-test-plan.md"
@@ -93,6 +109,8 @@ tag all this 'login' tests as 'smoke'
 How to run the tests in the terminal: Headed chromium and smoke tag only
 =========================================================================
 C:\Gitcode\Project_SauceLab_PlaywrightAutomation_AIagents> npx playwright test --project=chromium --headed --grep "@smoke"
+
+C:\Gitcode\Project_SauceLab_PlaywrightAutomation_AIagents> npx playwright test tests/checkout/checkout-information-validation.spec.ts --project=chromium
 
 How to run the tests in various enviroment .env file creation: dev, qa, prod
 =============================================================================
@@ -125,5 +143,6 @@ npx allure open allure-report
 Prompt - How to attach screenshot on failure and traceviewer in the html report and allure report, when the test fails:
 ===============================================================================================================
 I want to attach screenshot on failure and traceviewer in the html report and allure report, when the test fails
+
 
      
