@@ -1,8 +1,7 @@
-https://playwright.dev/docs/test-agents
-
-
 Installing playwright :
 =======================
+Refer this page : https://playwright.dev/docs/test-agents
+
 1. Create one folder with the name AI-automation-project. 
 2. Open VS Code in the dedicated automation project folder. .
 3. Open the terminal in the AI automation project folder. 
@@ -41,7 +40,90 @@ playwright-test
 playwright-test-generator.agent.md
 playwright-test-healer.agent.md
 playwright-test-planner.agent.md
-
 4) Select "Local" in bottom of the chat window. Donot select Copiolet.
 5) check if "Agent" icon  is seen in chat box window ( Agent , Ask, plan) .  If not seen, enable the Agent in "chat > Agent > checkbox > on" in settings of vscode.
 6) select playwright-test-planner.agent.md from Agent tool icon in chat window.
+7) Select Playwright Test Planner agent in the AI chat window and provide the below prompt. It will go through the entire website and create an end-to-end test plan in an .md file. 
+
+playwright-test-planner.agent.md prompts:
+=========================================
+
+Write a comprehensive end-to-end test plan or system test plan for the given website and go through each and every component of the website. Make sure nothing is missed.
+https://www.saucedemo.com/
+
+In this "saucedemo-comprehensive-test-plan.md" add a tests cases for field validation Testing if any.
+
+In this "saucedemo-comprehensive-test-plan.md" add a tests cases for UI Testing if any
+
+In this "saucedemo-comprehensive-test-plan.md" add a tests cases for integration Testing if any
+
+
+This will create a "saucedemo-comprehensive-test-plan.md" file in the project 'specs' folder. You can open this file and check the test plan created by the agent.
+seed.spec.ts will be created in tests folder with the test cases mention in the test plan. You can run the test cases using the command `npx playwright test` in the terminal.
+
+playwright-test-generator.agent.md prompts:
+=========================================
+implement all the test scenarios for "1. Login Screen and Authentication" in "saucedemo-comprehensive-test-plan.md"
+Create a Page Object Model structure, and make sure the following important folders are outside of the test folder:
+
+1) fixtures folder
+2) pages folder - common, saucelab sub folder
+     common folder - This will have BasePage.ts and PageManager.ts
+     saucelab folder - This will have each page names given as a sub folder and use the page object model to create pages for this folder
+3) testdata folder  - create a excel testdata sheet in the test data folder.Read the excel test data and convert the test data to json test data and use the json test data in the test cases.
+4) utilities folder - can have all the utils maintained here. e.g. install a package to read excel file test data 
+5) tests folder - It contains all the tests > spec.ts files
+
+This means the test folder, test data, fixtures, pages, and utils folder should be on the same level. Maintain the coding standard as per the enterprise-level framework.
+
+you can use the same kind of prompt and generate all the test scenarios for each and every test scenario mentioned in the "saucedemo-comprehensive-test-plan.md" file.
+
+If you see it got stuck and takes longer time to create the test cases, then you can stop the agent and give each test scenario like this:
+===========================================================================================================================================
+1) implement all the test scenarios for "1. Login Screen and Authentication" in "saucedemo-comprehensive-test-plan.md"
+
+Playwright-test-healer.agent.md prompt:
+=======================================
+Executa all the tests in "login" folder in test and heal the test if fails. Use 'stage' environment to run all tests.
+
+Playwright-test-healer.agent.md prompt: To Tag all the tests in "login" folder in test and heal the test if fails:
+==========================================================================
+tag all this 'login' tests as 'smoke' 
+
+How to run the tests in the terminal: Headed chromium and smoke tag only
+=========================================================================
+C:\Gitcode\Project_SauceLab_PlaywrightAutomation_AIagents> npx playwright test --project=chromium --headed --grep "@smoke"
+
+How to run the tests in various enviroment .env file creation: dev, qa, prod
+=============================================================================
+create .env.stage, .env.qa, .env.prod files to access url https://saucedemo.com/ and run the script
+
+How to execute the tests in different environment from powershell - Headed, chromium and smoke tests:
+======================================================================================================
+$env:ENV='stage'; npx playwright test --project=chromium --headed --grep '@smoke'
+$env:ENV='qa'; npx playwright test --project=chromium --headed --grep '@smoke'
+$env:ENV='prod'; npx playwright test --project=chromium --headed --grep '@smoke'
+
+
+How to execute the tests in different environment from powershell - Headed and smoke tests:
+======================================================================================================
+$env:ENV='stage'; npx playwright test --headed --grep '@smoke'
+$env:ENV='qa'; npx playwright test --headed --grep '@smoke'
+$env:ENV='prod'; npx playwright test --headed --grep '@smoke'
+
+Prompt - How to generate Allure report 
+==============================================
+Generate both html report and allure report the tests in this project folder
+
+To run tests to get both html and Allure report and To generate Allure reports:
+===============================================================================
+C:\Gitcode\Project_SauceLab_PlaywrightAutomation_AIagents> npm run test:reports
+C:\Gitcode\Project_SauceLab_PlaywrightAutomation_AIagents> 
+npx allure generate allure-results --clean -o allure-report
+npx allure open allure-report
+
+Prompt - How to attach screenshot on failure and traceviewer in the html report and allure report, when the test fails:
+===============================================================================================================
+I want to attach screenshot on failure and traceviewer in the html report and allure report, when the test fails
+
+     
