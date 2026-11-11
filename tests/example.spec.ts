@@ -1,18 +1,29 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/sauceDemoFixture';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test('standard user can complete checkout using Excel test data', async ({ page, pages, testData }) => {
+  const user = testData.users.find((candidate) => candidate.scenario === 'standard_user');
+  const checkout = testData.checkoutProfiles.find((candidate) => candidate.scenario === 'standard_checkout');
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  expect(user, 'A standard_user row must exist in the Users worksheet').toBeDefined();
+  expect(checkout, 'A standard_checkout row must exist in the Checkout worksheet').toBeDefined();
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  await pages.loginPage.open('/');
+  await pages.loginPage.login(user!.username, user!.password);
+  await pages.inventoryPage.addToCart('Sauce Labs Backpack');
+  await pages.inventoryPage.cartButton.click();
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  await expect(pages.cartPage.items).toHaveCount(1);
+  await pages.cartPage.checkout();
+  await pages.checkoutInformationPage.fillInformation(checkout!);
+  await pages.checkoutInformationPage.continue();
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  await expect(pages.checkoutOverviewPage.items).toHaveCount(1);
+  await expect(pages.checkoutOverviewPage.subtotal).toHaveText('Item total: $29.99');
+  await expect(pages.checkoutOverviewPage.tax).toHaveText('Tax: $2.40');
+  await expect(pages.checkoutOverviewPage.total).toHaveText('Total: $32.39');
+  await pages.checkoutOverviewPage.finish();
+
+  await expect(page).toHaveURL(/\/checkout-complete\.html$/);
+  await expect(pages.checkoutCompletePage.confirmationHeading).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Cart, empty' })).toBeVisible();
 });
