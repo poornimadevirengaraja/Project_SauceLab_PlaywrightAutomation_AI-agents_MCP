@@ -1,4 +1,4 @@
-import { Locator, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from '../../common/BasePage';
 
 export class GlobalNavigationPage extends BasePage {
@@ -26,23 +26,34 @@ export class GlobalNavigationPage extends BasePage {
   }
 
   async open(): Promise<void> {
+    if (await this.drawer.getAttribute('aria-hidden') === 'false') {
+      return;
+    }
+
     await this.openMenuButton.click();
+    await expect(this.drawer).toHaveAttribute('aria-hidden', 'false');
   }
 
   async close(): Promise<void> {
+    if (await this.drawer.getAttribute('aria-hidden') === 'true') {
+      return;
+    }
+
     await this.closeMenuButton.click();
+    await expect(this.drawer).toHaveAttribute('aria-hidden', 'true');
   }
 
   async openDynamicCatalogEntry(label: string): Promise<void> {
-    if (!(await this.closeMenuButton.isVisible())) {
-      await this.open();
-      await this.closeMenuButton.waitFor({ state: 'visible' });
-    }
+    await this.open();
     await this.dynamicCatalogLink.waitFor({ state: 'visible' });
     if (await this.dynamicCatalogLink.getAttribute('aria-expanded') !== 'true') {
       await this.dynamicCatalogLink.click();
+      await expect(this.dynamicCatalogLink).toHaveAttribute('aria-expanded', 'true');
     }
-    await this.menuEntry(label).click();
+
+    const entry = this.menuEntry(label);
+    await expect(entry).toBeVisible();
+    await entry.click();
   }
 
   menuEntry(label: string): Locator {
