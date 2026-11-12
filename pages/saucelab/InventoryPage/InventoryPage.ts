@@ -47,6 +47,10 @@ export class InventoryPage extends BasePage {
     return this.productCard(productName).getByRole('button', { name: 'Add to cart', exact: true });
   }
 
+  productRemoveButton(productName: string): Locator {
+    return this.productCard(productName).getByRole('button', { name: 'Remove', exact: true });
+  }
+
   async addToCart(productName: string): Promise<void> {
     await this.productAddButton(productName).click();
   }
