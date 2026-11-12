@@ -1,4 +1,4 @@
-# Project_SauceLab_PlaywrightAutomation_AIagents
+# Project_SauceLab_PlaywrightAutomation_AI-agents
 
 This is a Playwright Automation framework of a sample Project "sauce lab" using playwright Typescript and Javascript using Playwright Test AI Agents
 🎭 planner explores the app and produces a Markdown test plan
