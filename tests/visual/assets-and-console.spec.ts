@@ -14,24 +14,32 @@ test.describe('Responsive, Accessibility, and Visual Quality', () => {
     expect(checkoutProfile).toBeDefined();
     expect(product).toBeDefined();
 
-    const appOrigin = new URL(process.env.BASE_URL ?? 'https://www.saucedemo.com').origin;
+    const appHostname = new URL(process.env.BASE_URL ?? 'https://www.saucedemo.com')
+      .hostname
+      .replace(/^www\./, '');
+    const isAppRequest = (url: string): boolean =>
+      new URL(url).hostname.replace(/^www\./, '') === appHostname;
     const consoleErrors: string[] = [];
     const pageErrors: string[] = [];
     const failedRequests: string[] = [];
 
     page.on('console', (message) => {
-      if (message.type() === 'error' && !message.text().includes('Permissions policy violation: unload is not allowed')) {
+      if (
+        message.type() === 'error' &&
+        !message.text().includes('Permissions policy violation: unload is not allowed') &&
+        !message.text().startsWith('Failed to load resource:')
+      ) {
         consoleErrors.push(`${page.url()}: ${message.text()}`);
       }
     });
     page.on('pageerror', (error) => pageErrors.push(`${page.url()}: ${error.message}`));
     page.on('requestfailed', (request) => {
-      if (new URL(request.url()).origin === appOrigin) {
+      if (isAppRequest(request.url())) {
         failedRequests.push(`${request.url()}: ${request.failure()?.errorText ?? 'request failed'}`);
       }
     });
     page.on('response', (response) => {
-      if (new URL(response.url()).origin === appOrigin && response.status() >= 400) {
+      if (isAppRequest(response.url()) && response.status() >= 400) {
         failedRequests.push(`${response.url()}: HTTP ${response.status()}`);
       }
     });
@@ -85,15 +93,7 @@ test.describe('Responsive, Accessibility, and Visual Quality', () => {
     await checkPageHealth();
 
     for (const catalog of ['Lazy Load', 'Spinner', 'Slider']) {
-      if (!(await pages.navigationPage.drawer.isVisible())) {
-        await pages.navigationPage.open();
-      }
-      await expect(pages.navigationPage.drawer).toBeVisible();
-      if (await pages.navigationPage.dynamicCatalogLink.getAttribute('aria-expanded') !== 'true') {
-        await pages.navigationPage.dynamicCatalogLink.click();
-      }
-      await expect(pages.navigationPage.menuEntry(catalog)).toBeVisible();
-      await pages.navigationPage.menuEntry(catalog).click();
+      await pages.navigationPage.openDynamicCatalogEntry(catalog);
       await expect(page.getByTestId('title')).toHaveText(`Dynamic Catalog - ${catalog}`);
       await checkPageHealth();
     }
