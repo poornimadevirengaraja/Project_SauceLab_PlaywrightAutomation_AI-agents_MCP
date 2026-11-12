@@ -3,6 +3,7 @@ import { CartPage } from '../saucelab/CartPage/CartPage';
 import { CheckoutCompletePage } from '../saucelab/CheckoutCompletePage/CheckoutCompletePage';
 import { CheckoutInformationPage } from '../saucelab/CheckoutInformationPage/CheckoutInformationPage';
 import { CheckoutOverviewPage } from '../saucelab/CheckoutOverviewPage/CheckoutOverviewPage';
+import { DynamicCatalogPage } from '../saucelab/DynamicCatalogPage/DynamicCatalogPage';
 import { GlobalNavigationPage } from '../saucelab/GlobalNavigationPage/GlobalNavigationPage';
 import { InventoryPage } from '../saucelab/InventoryPage/InventoryPage';
 import { LoginPage } from '../saucelab/LoginPage/LoginPage';
@@ -14,6 +15,7 @@ export class PageManager {
   readonly cartPage: CartPage;
   readonly checkoutInformationPage: CheckoutInformationPage;
   readonly checkoutOverviewPage: CheckoutOverviewPage;
+  readonly dynamicCatalogPage: DynamicCatalogPage;
   readonly checkoutCompletePage: CheckoutCompletePage;
   readonly navigationPage: GlobalNavigationPage;
   readonly productDetailPage: ProductDetailPage;
@@ -24,6 +26,7 @@ export class PageManager {
     this.cartPage = new CartPage(page);
     this.checkoutInformationPage = new CheckoutInformationPage(page);
     this.checkoutOverviewPage = new CheckoutOverviewPage(page);
+    this.dynamicCatalogPage = new DynamicCatalogPage(page);
     this.checkoutCompletePage = new CheckoutCompletePage(page);
     this.navigationPage = new GlobalNavigationPage(page);
     this.productDetailPage = new ProductDetailPage(page);

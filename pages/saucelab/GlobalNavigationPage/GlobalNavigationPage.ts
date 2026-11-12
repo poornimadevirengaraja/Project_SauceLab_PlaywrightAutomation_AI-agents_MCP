@@ -33,6 +33,18 @@ export class GlobalNavigationPage extends BasePage {
     await this.closeMenuButton.click();
   }
 
+  async openDynamicCatalogEntry(label: string): Promise<void> {
+    if (!(await this.closeMenuButton.isVisible())) {
+      await this.open();
+      await this.closeMenuButton.waitFor({ state: 'visible' });
+    }
+    await this.dynamicCatalogLink.waitFor({ state: 'visible' });
+    if (await this.dynamicCatalogLink.getAttribute('aria-expanded') !== 'true') {
+      await this.dynamicCatalogLink.click();
+    }
+    await this.menuEntry(label).click();
+  }
+
   menuEntry(label: string): Locator {
     return label === 'Close Menu'
       ? this.closeMenuButton

@@ -144,5 +144,12 @@ Prompt - How to attach screenshot on failure and traceviewer in the html report 
 ===============================================================================================================
 I want to attach screenshot on failure and traceviewer in the html report and allure report, when the test fails
 
+================================================================================================================================================
+After creating a basic framework, you can use the below prompt to generate the test cases 
+for each and every test scenario mentioned in the "saucedemo-comprehensive-test-plan.md" file using copiolet fusion interactive also.
+================================================================================================================================================
+Prompt :
+=======
+add a test for "3.3. Add and remove each product from inventory" and use the same framework structure
 
      
